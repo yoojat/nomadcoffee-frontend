@@ -1,8 +1,5 @@
 import { gql, useMutation } from '@apollo/client';
-import {
-  faFacebookSquare,
-  faInstagram,
-} from '@fortawesome/free-brands-svg-icons';
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
@@ -43,7 +40,6 @@ const LOGIN_MUTATION = gql`
 
 function Login() {
   const location = useLocation();
-  console.log(location);
   const {
     register,
     handleSubmit,
