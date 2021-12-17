@@ -167,7 +167,9 @@ function Add() {
               <TextArea {...register('caption')} />
             </InputItem>
             <Button value={'Upload'} type='submit' />
-            <CancelButton onClick={history.push('/')}>Cancel</CancelButton>
+            <CancelButton onClick={() => history.push('/')}>
+              Cancel
+            </CancelButton>
           </InputContainer>
         </BaseBox>
         {isOpenPost && <FindLocation autoClose onComplete={onCompletePost} />}
