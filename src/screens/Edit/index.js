@@ -117,15 +117,12 @@ function Edit() {
     }
   };
 
-  const [editCoffeeShop, { loading: editCoffeeLoading }] = useMutation(
-    EDIT_COFFEESHOP_MUTATION,
-    {
-      onCompleted,
-      variables: {
-        id: Number(shopId),
-      },
-    }
-  );
+  const [editCoffeeShop] = useMutation(EDIT_COFFEESHOP_MUTATION, {
+    onCompleted,
+    variables: {
+      id: Number(shopId),
+    },
+  });
 
   const onSubmitValid = (data) => {
     if (loading) {
@@ -144,7 +141,7 @@ function Edit() {
     });
   };
 
-  const { data, loading } = useQuery(SEE_COFFEE_SHOP, {
+  const { loading } = useQuery(SEE_COFFEE_SHOP, {
     variables: {
       id: Number(shopId),
     },
@@ -152,7 +149,6 @@ function Edit() {
       const {
         seeCoffeeShop: {
           coffeeShop: {
-            id,
             name,
             address,
             caption,

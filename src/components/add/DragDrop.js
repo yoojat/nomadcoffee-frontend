@@ -156,7 +156,7 @@ const DragDrop = ({ files, setFiles }) => {
       // 매개변수로 받은 id와 일치하지 않는지에 따라서 filter 해줍니다.
       setFiles(files.filter((file) => file.id !== id));
     },
-    [files]
+    [files, setFiles]
   );
   return (
     <DragDropContainer>

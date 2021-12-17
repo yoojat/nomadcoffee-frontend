@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PhotoItem from '../../components/home/photoItem';
 import routes from '../../routes';
-import { Background, BaseBox, Wrapper } from './styles';
+import { Background, Wrapper } from './styles';
 import { logUserOut } from '../../apollo';
 
 const SEE_COFFEE_SHOPS = gql`
@@ -44,8 +44,8 @@ const LogoutButton = styled.button`
 `;
 
 function Home() {
-  const [lastId, setLastId] = useState(undefined);
-  const { data, loading, refetch, fetchMore } = useQuery(SEE_COFFEE_SHOPS, {
+  const [lastId] = useState(undefined);
+  const { data, loading } = useQuery(SEE_COFFEE_SHOPS, {
     variables: { lastId },
     // onCompleted: (data) =>
     //   setLastId(
