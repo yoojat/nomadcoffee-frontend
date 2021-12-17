@@ -17,6 +17,7 @@ import {
   Wrapper,
 } from './styles';
 import { gql, useMutation } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 
 const CREATE_COFFEESHOP_MUTATION = gql`
   mutation createCoffeeShop(
@@ -50,6 +51,7 @@ function Add() {
   const latitude = useRef(0);
   const longitude = useRef(0);
   const [photoFiles, setPhotoFiles] = useState([]);
+  let history = useHistory();
 
   const onChangeOpenPost = () => {
     setIsOpenPost(!isOpenPost);
@@ -85,19 +87,17 @@ function Add() {
   });
 
   const onCompleted = (data) => {
-    console.log({ data });
-    // const {
-    //   createCoffeeShop: { ok, error, coffeeShop },
-    // } = data;
+    const {
+      createCoffeeShop: { ok },
+    } = data;
+    if (ok) {
+      history.push('/');
+    }
     // if (!ok) {
     //   console.log({ error });
     //   return setError('result', {
     //     message: error,
     //   });
-    // }
-
-    // if (token) {
-    //   logUserIn(token);
     // }
   };
 
@@ -167,7 +167,7 @@ function Add() {
               <TextArea {...register('caption')} />
             </InputItem>
             <Button value={'Upload'} type='submit' />
-            <CancelButton>Cancel</CancelButton>
+            <CancelButton onClick={history.push('/')}>Cancel</CancelButton>
           </InputContainer>
         </BaseBox>
         {isOpenPost && <FindLocation autoClose onComplete={onCompletePost} />}

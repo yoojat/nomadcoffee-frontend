@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 const PhotoBoxContainer = styled.div`
   background-color: white;
@@ -8,14 +9,12 @@ const PhotoBoxContainer = styled.div`
 `;
 const PhotoBox = styled.div`
   width: 300px;
-  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 const Photo = styled.img`
   max-width: 100%;
-  height: auto;
 `;
 
 const DescriptionBox = styled.div`
@@ -27,20 +26,32 @@ const CategoryText = styled.div`
   margin-top: 10px;
 `;
 
-function PhotoItem({ urlArr }) {
+const EditButton = styled.button`
+  top: 40px;
+  right: 40px;
+`;
+
+function PhotoItem({ urlArr, categories, caption, isMine, coffeeShopId }) {
   return (
     <PhotoBoxContainer>
       {urlArr.map((url) => (
-        <>
+        <div key={url}>
           <PhotoBox>
             <Photo src={url} />
           </PhotoBox>
-          <DescriptionBox>
-            <CategoryTitle>Category</CategoryTitle>
-            <CategoryText>#123 #123</CategoryText>
-          </DescriptionBox>
-        </>
+        </div>
       ))}
+      <DescriptionBox>
+        <CategoryText>
+          {categories.map((category) => (
+            <span key={category}>{category}</span>
+          ))}
+        </CategoryText>
+        <CategoryTitle>{caption}</CategoryTitle>
+        <EditButton>
+          {isMine && <Link to={`/edit/${coffeeShopId}`}>수정</Link>}
+        </EditButton>
+      </DescriptionBox>
     </PhotoBoxContainer>
   );
 }

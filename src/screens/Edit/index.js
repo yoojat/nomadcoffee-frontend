@@ -18,6 +18,7 @@ import {
 } from './styles';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const SEE_COFFEE_SHOP = gql`
   query seeCoffeeShop($id: Int!) {
@@ -41,11 +42,11 @@ const SEE_COFFEE_SHOP = gql`
 const EDIT_COFFEESHOP_MUTATION = gql`
   mutation editCoffeeShop(
     $id: Int!
-    $name: String!
-    $latitude: String!
-    $longitude: String!
-    $photoFiles: [Upload]!
-    $caption: String!
+    $name: String
+    $latitude: String
+    $longitude: String
+    $photoFiles: [Upload]
+    $caption: String
   ) {
     editCoffeeShop(
       id: $id
@@ -57,9 +58,6 @@ const EDIT_COFFEESHOP_MUTATION = gql`
     ) {
       ok
       error
-      coffeeShop {
-        id
-      }
     }
   }
 `;
@@ -72,6 +70,8 @@ function Edit() {
   const latitude = useRef(0);
   const longitude = useRef(0);
   const [photoFiles, setPhotoFiles] = useState([]);
+
+  const history = useHistory();
 
   const onChangeOpenPost = () => {
     setIsOpenPost(!isOpenPost);
@@ -107,12 +107,13 @@ function Edit() {
   });
 
   const onCompleted = (data) => {
-    console.log({ data });
     const {
       editCoffeeShop: { ok, error },
     } = data;
     if (!ok) {
       console.log({ error });
+    } else {
+      history.push('/');
     }
   };
 
@@ -120,6 +121,9 @@ function Edit() {
     EDIT_COFFEESHOP_MUTATION,
     {
       onCompleted,
+      variables: {
+        id: Number(shopId),
+      },
     }
   );
 
@@ -140,7 +144,7 @@ function Edit() {
     });
   };
 
-  const { data, loading, onComplete } = useQuery(SEE_COFFEE_SHOP, {
+  const { data, loading } = useQuery(SEE_COFFEE_SHOP, {
     variables: {
       id: Number(shopId),
     },
@@ -148,6 +152,7 @@ function Edit() {
       const {
         seeCoffeeShop: {
           coffeeShop: {
+            id,
             name,
             address,
             caption,
@@ -200,7 +205,9 @@ function Edit() {
               <TextArea {...register('caption')} />
             </InputItem>
             <Button value={'Upload'} type='submit' />
-            <CancelButton>Cancel</CancelButton>
+            <CancelButton onClick={() => history.push('/')}>
+              Cancel
+            </CancelButton>
           </InputContainer>
         </BaseBox>
         {isOpenPost && <FindLocation autoClose onComplete={onCompletePost} />}

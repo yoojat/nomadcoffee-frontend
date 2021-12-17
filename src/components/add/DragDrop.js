@@ -158,7 +158,6 @@ const DragDrop = ({ files, setFiles }) => {
     },
     [files]
   );
-  files.forEach((file) => console.log(file.object));
   return (
     <DragDropContainer>
       <Input
