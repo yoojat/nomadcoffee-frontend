@@ -41,7 +41,10 @@ export const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: authLink.concat(
     createUploadLink({
-      uri: 'http://localhost:4000/graphql',
+      uri:
+        process.env.NODE_ENV === 'production'
+          ? 'https://nomadcoffee-backend-refined.herokuapp.com/graphql'
+          : 'http://localhost:4000/graphql',
     })
   ),
 });

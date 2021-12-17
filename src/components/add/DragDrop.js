@@ -109,7 +109,7 @@ const DragDrop = ({ files, setFiles }) => {
       }
       setFiles(tempFiles);
     },
-    [files]
+    [setFiles, files]
   ); // 위에서 선언했던 files state 배열을 deps에 넣어줍니다
 
   const handleDrop = useCallback(
